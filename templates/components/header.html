@@ -1,0 +1,63 @@
+<header class="header header-sticky p-0 mb-4">
+    <div class="container-fluid border-bottom px-4">
+        <button class="header-toggler d-lg-none" type="button" data-coreui-toggle="sidebar"
+            data-coreui-target="#sidebar" aria-label="Abrir menu">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+
+        <div class="header-brand d-lg-none">
+            Aventuras del Sur
+        </div>
+
+        <ul class="header-nav ms-auto">
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <button class="nav-link py-2 px-2 dropdown-toggle" type="button" data-coreui-toggle="dropdown"
+                    aria-expanded="false">
+                    <span class="avatar avatar-md bg-success-subtle text-success">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+
+                    <span class="d-none d-md-inline ms-2">
+                        {{ user.get_full_name|default:user.username }}
+                    </span>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end pt-0">
+                    <li class="dropdown-header bg-body-tertiary fw-semibold">
+                        Cuenta
+                    </li>
+
+                    <li>
+                        <span class="dropdown-item-text small text-body-secondary">
+                            Usuario: {{ user.username }}
+                        </span>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+
+                            <button class="dropdown-item text-danger" type="submit">
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                Cerrar sesion
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="btn btn-primary" href="{% url 'login' %}">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Iniciar sesion
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</header>

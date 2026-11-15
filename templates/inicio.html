@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Inicio | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        <h1>Panel de administracion</h1>
+
+        <p class="page-subtitle">
+            Accede a las principales funciones del sistema.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="row g-4">
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="avatar avatar-lg bg-primary-subtle text-primary">
+                        <i class="bi bi-people fs-4"></i>
+                    </span>
+
+                    <h2 class="h5 mb-0">
+                        Usuarios
+                    </h2>
+                </div>
+
+                <p class="text-body-secondary">
+                    Administra las cuentas y los roles de acceso.
+                </p>
+
+                <a class="btn btn-primary" href="{% url 'usuario_lista' %}">
+                    Gestionar usuarios
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="avatar avatar-lg bg-primary-subtle text-primary">
+                        <i class="bi bi-tags fs-4"></i>
+                    </span>
+
+                    <h2 class="h5 mb-0">
+                        Categorias
+                    </h2>
+                </div>
+
+                <p class="text-body-secondary">
+                    Organiza las categorias de las experiencias.
+                </p>
+
+                <a class="btn btn-primary" href="{% url 'categoria_lista' %}">
+                    Gestionar categorias
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="avatar avatar-lg bg-primary-subtle text-primary">
+                        <i class="bi bi-compass fs-4"></i>
+                    </span>
+
+                    <h2 class="h5 mb-0">
+                        Experiencias
+                    </h2>
+                </div>
+
+                <p class="text-body-secondary">
+                    Revisa y administra todas las experiencias.
+                </p>
+
+                <a class="btn btn-primary" href="{% url 'experiencia_lista' %}">
+                    Gestionar experiencias
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="avatar avatar-lg bg-primary-subtle text-primary">
+                        <i class="bi bi-calendar-check fs-4"></i>
+                    </span>
+
+                    <h2 class="h5 mb-0">
+                        Reservas
+                    </h2>
+                </div>
+
+                <p class="text-body-secondary">
+                    Consulta las reservas y confirma sus pagos.
+                </p>
+
+                <a class="btn btn-primary" href="{% url 'reserva_lista' %}">
+                    Gestionar reservas
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="avatar avatar-lg bg-primary-subtle text-primary">
+                        <i class="bi bi-map fs-4"></i>
+                    </span>
+
+                    <h2 class="h5 mb-0">
+                        Catalogo
+                    </h2>
+                </div>
+
+                <p class="text-body-secondary">
+                    Visualiza las experiencias disponibles para turistas.
+                </p>
+
+                <a class="btn btn-outline-primary" href="{% url 'catalogo_experiencias' %}">
+                    Ver catalogo
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Catalogo | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        <h1>Catalogo de experiencias</h1>
+
+        <p class="page-subtitle">
+            Descubre las proximas actividades disponibles.
+        </p>
+    </div>
+
+    {% if perms.experiencias.view_reserva %}
+    <a class="btn btn-outline-primary" href="{% url 'reserva_lista' %}">
+        <i class="bi bi-calendar-check me-2"></i>
+        Mis reservas
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        <strong>Proximas experiencias</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-datatable="true">
+                <thead>
+                    <tr>
+                        <th>Experiencia</th>
+                        <th>Categoria</th>
+                        <th>Precio</th>
+                        <th>Cupos</th>
+                        <th>Fecha y hora</th>
+                        <th>Guia</th>
+
+                        <th class="text-end" data-dt-order="disable">
+                            Reserva
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for experiencia in experiencias %}
+                    <tr>
+                        <td>
+                            <div>
+                                <strong>
+                                    <a href="{% url 'experiencia_detalle' experiencia.pk %}">{{ experiencia.titulo }}</a>
+                                </strong>
+
+                                <div class="small text-body-secondary table-description">
+                                    {{ experiencia.descripcion }}
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            {{ experiencia.categoria.nombre }}
+                        </td>
+
+                        <td>
+                            <strong>
+                                ${{ experiencia.precio }}
+                            </strong>
+                        </td>
+
+                        <td data-order="{{ experiencia.cupos_disponibles }}">
+                            {% if experiencia.cupos_disponibles <= 0 %} <span class="badge text-bg-danger">
+                                Sin cupos
+                                </span>
+                                {% else %}
+                                <span class="text-success fw-semibold">
+                                    {{ experiencia.cupos_disponibles }}
+                                </span>
+
+                                <span class="text-body-secondary">
+                                    de {{ experiencia.cupo_maximo }}
+                                </span>
+                                {% endif %}
+                        </td>
+
+                        <td data-order="{{ experiencia.fecha_hora|date:'Y-m-d H:i' }}">
+                            {{ experiencia.fecha_hora|date:"d/m/Y H:i" }}
+                        </td>
+                        <td>
+                            {{ experiencia.creador.get_full_name|default:experiencia.creador.username }}
+                        </td>
+
+                        <td>
+                            <div class="d-flex justify-content-end">
+                                {% if experiencia.cupos_disponibles <= 0 %} <button class="btn btn-sm btn-secondary"
+                                    type="button" disabled>
+                                    Agotado
+                                    </button>
+
+                                    {% elif experiencia.ya_reservada %}
+                                    <span class="badge text-bg-success py-2 px-3">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Ya reservada
+                                    </span>
+
+                                    {% elif user.is_authenticated %}
+                                    {% if puede_reservar %}
+                                    <button class="btn btn-sm btn-primary" type="button" data-coreui-toggle="modal"
+                                        data-coreui-target="#modal-reservar-{{ experiencia.id }}">
+                                    
+                                        <i class="bi bi-calendar-plus me-1"></i>
+                                        Reservar
+                                    </button>
+                                    {% else %}
+                                    <span class="text-body-secondary">
+                                        No disponible para tu rol
+                                    </span>
+                                    {% endif %}
+
+                                    {% else %}
+                                    <a class="btn btn-sm btn-outline-primary"
+                                        href="{% url 'login' %}?next={{ request.path|urlencode }}">
+                                        Iniciar sesion
+                                    </a>
+                                    {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if puede_reservar %}
+{% for experiencia in experiencias %}
+{% if experiencia.cupos_disponibles > 0 and not experiencia.ya_reservada %}
+{% include 'components/modal_confirmar_reserva.html' %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+{{ titulo }} | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        <h1>{{ titulo }}</h1>
+
+        <p class="page-subtitle">
+            Registra la informacion, fecha y capacidad de la actividad.
+        </p>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-9">
+        <div class="card">
+            <div class="card-header">
+                <strong>Datos de la experiencia</strong>
+            </div>
+
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% include 'components/form_fields.html' %}
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a class="btn btn-light" href="{% url 'experiencia_lista' %}">
+                            Cancelar
+                        </a>
+
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-floppy me-2"></i>
+                            Guardar experiencia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

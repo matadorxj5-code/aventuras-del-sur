@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Usuarios | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        <h1>Gestion de usuarios</h1>
+
+        <p class="page-subtitle">
+            Administra las cuentas y roles del sistema.
+        </p>
+    </div>
+
+    {% if perms.auth.add_user %}
+    <a class="btn btn-primary" href="{% url 'usuario_crear' %}">
+        <i class="bi bi-person-plus me-2"></i>
+        Crear usuario
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        <strong>Usuarios registrados</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-datatable="true">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Nombre completo</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+
+                        <th class="text-end" data-dt-order="disable">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="avatar avatar-sm bg-success-subtle text-success">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+
+                                <strong>{{ usuario.username }}</strong>
+                            </div>
+                        </td>
+
+                        <td>
+                            {{ usuario.get_full_name|default:"Sin nombre" }}
+                        </td>
+
+                        <td>
+                            {{ usuario.email|default:"Sin correo" }}
+                        </td>
+
+                        <td>
+                            {% for grupo in usuario.groups.all %}
+                            {{ grupo.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                            Sin rol
+                            {% endfor %}
+                        </td>
+
+                        <td>
+                            {% if usuario.is_active %}
+                            <span class="badge text-bg-success badge-status">
+                                Activo
+                            </span>
+                            {% else %}
+                            <span class="badge text-bg-secondary badge-status">
+                                Inactivo
+                            </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="table-actions justify-content-end">
+                                {% if perms.auth.change_user %}
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'usuario_editar' usuario.id %}"
+                                    data-coreui-toggle="tooltip" title="Editar usuario">
+                                    <i class="bi bi-pencil"></i>
+                                    <span class="visually-hidden">
+                                        Editar
+                                    </span>
+                                </a>
+                                {% endif %}
+
+                                {% if perms.auth.delete_user %}
+                                <button class="btn btn-sm btn-outline-danger" type="button" data-coreui-toggle="modal"
+                                    data-coreui-target="#modal-eliminar-usuario-{{ usuario.id }}"
+                                    title="Eliminar usuario">
+                                    <i class="bi bi-trash"></i>
+                                    <span class="visually-hidden">
+                                        Eliminar
+                                    </span>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% if perms.auth.delete_user %}
+    {% for usuario in usuarios %}
+        {% url 'usuario_eliminar' usuario.id as eliminar_usuario_url %}
+
+        {% with modal_prefijo='usuario' objeto_id=usuario.id %}
+            {% with objeto_nombre=usuario.username eliminar_url=eliminar_usuario_url %}
+                {% include 'components/modal_eliminar.html' %}
+            {% endwith %}
+        {% endwith %}
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block encabezado %}<div class="page-heading"><h1>Grupo: {{ experiencia.titulo }}</h1><a class="btn btn-outline-primary" href="{% url 'experiencia_editar' experiencia.pk %}">Actualizar experiencia</a></div>{% endblock %}
+{% block contenido %}
+<p>{{ experiencia.fecha_hora|date:'d/m/Y H:i' }} | {% if experiencia.estado %}Activa{% else %}Inactiva{% endif %}</p>
+<div class="card card-body"><div class="table-responsive">
+<table class="table" data-datatable="true"><thead><tr><th>Turista</th><th>Pago</th><th>Asistencia</th><th data-dt-order="disable">Registrar visitante</th></tr></thead>
+<tbody>{% for reserva in reservas %}<tr><td>{{ reserva.usuario.get_full_name|default:reserva.usuario.username }}</td><td>{{ reserva.get_estado_pago_display }}</td><td>{% if reserva.asistencia %}Registrada{% else %}Pendiente{% endif %}</td>
+<td><form method="post" action="{% url 'registrar_visitante' reserva.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-success" name="asistencia" value="{% if reserva.asistencia %}no{% else %}si{% endif %}">{% if reserva.asistencia %}Desmarcar{% else %}Registrar asistencia{% endif %}</button></form></td></tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}

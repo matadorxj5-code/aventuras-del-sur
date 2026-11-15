@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block encabezado %}<div class="page-heading"><h1>Calendario de actividades</h1></div>{% endblock %}
+{% block contenido %}
+<nav class="d-flex flex-wrap gap-3 justify-content-between mb-3" aria-label="Mes del calendario">
+    <a href="?mes={{ anterior|date:'Y-m' }}">Mes anterior</a><strong>{{ mes|date:'F Y' }}</strong><a href="?mes={{ siguiente|date:'Y-m' }}">Mes siguiente</a>
+</nav>
+<div class="card card-body"><div class="table-responsive">
+<table class="table table-bordered calendario"><thead><tr><th>Lun</th><th>Mar</th><th>Mie</th><th>Jue</th><th>Vie</th><th>Sab</th><th>Dom</th></tr></thead>
+<tbody>{% for semana in semanas %}<tr>{% for dia in semana %}<td class="{% if not dia.actual %}text-body-secondary{% endif %}">
+    <span>{{ dia.fecha.day }}</span>
+    {% for evento in dia.eventos %}<a class="d-block small mt-2" href="{% url 'grupo' evento.pk %}">{{ evento.fecha_hora|date:'H:i' }} {{ evento.titulo }}</a>{% endfor %}
+</td>{% endfor %}</tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base_auth.html' %}
+
+{% block titulo %}
+Iniciar sesion | Aventuras del Sur
+{% endblock %}
+
+{% block contenido %}
+<div class="card auth-card shadow-lg">
+    <div class="card-body p-4 p-md-5">
+        <div class="auth-brand">
+
+            <div>
+                <h1 class="h4 mb-0">
+                    Aventuras del Sur
+                </h1>
+
+                <small class="text-body-secondary">
+                    Administracion y reservas
+                </small>
+            </div>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            El nombre de usuario o la contraseña son incorrectos.
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label" for="{{ form.username.id_for_label }}">
+                    {{ form.username.label }}
+                </label>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-person"></i>
+                    </span>
+
+                    {{ form.username }}
+                </div>
+
+                {% for error in form.username.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ error }}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label" for="{{ form.password.id_for_label }}">
+                    {{ form.password.label }}
+                </label>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+
+                    {{ form.password }}
+                </div>
+
+                {% for error in form.password.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ error }}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <button class="btn btn-primary w-100" type="submit">
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+                Ingresar
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

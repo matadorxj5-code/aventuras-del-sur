@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block encabezado %}<div class="page-heading"><h1>Reserva #{{ reserva.pk }}</h1></div>{% endblock %}
+{% block contenido %}
+<div class="card card-body p-4">
+    <h2 class="h4">{{ reserva.experiencia.titulo }}</h2>
+    <p>Turista: {{ reserva.usuario.get_full_name|default:reserva.usuario.username }}</p>
+    <p>Fecha y hora: {{ reserva.experiencia.fecha_hora|date:'d/m/Y H:i' }}</p>
+    <p>Estado de pago: <strong>{{ reserva.get_estado_pago_display }}</strong></p>
+    {% if reserva.estado_pago == 'confirmado' %}<p class="text-success">El pago de esta reserva esta confirmado.</p>{% else %}<p>El pago esta pendiente de confirmacion por administracion.</p>{% endif %}
+    {% if not reserva.experiencia.estado %}<p class="text-danger">La actividad esta inactiva. Consulta con administracion antes de asistir.</p>{% endif %}
+    <div class="d-flex flex-wrap gap-2"><a class="btn btn-outline-primary" href="{% url 'experiencia_detalle' reserva.experiencia_id %}">Detalle del evento</a>
+    {% if puede_valorar %}<a class="btn btn-outline-success" href="{% url 'valorar' reserva.pk %}">Valorar experiencia</a>{% endif %}</div>
+    {% if reserva.valoracion %}<p class="mt-3 mb-0">Tu valoracion: {{ reserva.valoracion }}/5</p><p>{{ reserva.comentario }}</p>{% endif %}
+</div>
+{% endblock %}

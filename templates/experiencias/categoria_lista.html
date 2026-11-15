@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Categorias | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        <h1>Gestion de categorias</h1>
+
+        <p class="page-subtitle">
+            Organiza y controla las categorias disponibles.
+        </p>
+    </div>
+
+    {% if perms.experiencias.add_categoria %}
+    <a class="btn btn-primary" href="{% url 'categoria_crear' %}">
+        <i class="bi bi-plus-lg me-2"></i>
+        Crear categoria
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        <strong>Categorias registradas</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-datatable="true">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+
+                        <th class="text-end" data-dt-order="disable">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for categoria in categorias %}
+                    <tr>
+                        <td>{{ categoria.id }}</td>
+
+                        <td>
+                            <strong>{{ categoria.nombre }}</strong>
+                        </td>
+
+                        <td class="description-cell">
+                            {{ categoria.descripcion }}
+                        </td>
+
+                        <td>
+                            {% if categoria.estado %}
+                            <span class="badge text-bg-success badge-status">
+                                Activa
+                            </span>
+                            {% else %}
+                            <span class="badge text-bg-secondary badge-status">
+                                Inactiva
+                            </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="table-actions justify-content-end">
+                                {% if perms.experiencias.change_categoria %}
+                                <a class="btn btn-sm btn-outline-primary"
+                                    href="{% url 'categoria_editar' categoria.id %}" data-coreui-toggle="tooltip"
+                                    title="Editar categoria">
+                                    <i class="bi bi-pencil"></i>
+
+                                    <span class="visually-hidden">
+                                        Editar
+                                    </span>
+                                </a>
+                                {% endif %}
+
+                                {% if perms.experiencias.delete_categoria %}
+                                <button class="btn btn-sm btn-outline-danger" type="button" data-coreui-toggle="modal"
+                                    data-coreui-target="#modal-eliminar-categoria-{{ categoria.id }}"
+                                    title="Eliminar categoria">
+                                    <i class="bi bi-trash"></i>
+
+                                    <span class="visually-hidden">
+                                        Eliminar
+                                    </span>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% if perms.experiencias.delete_categoria %}
+    {% for categoria in categorias %}
+        {% url 'categoria_eliminar' categoria.id as eliminar_categoria_url %}
+
+        {% with modal_prefijo='categoria' objeto_id=categoria.id %}
+            {% with objeto_nombre=categoria.nombre eliminar_url=eliminar_categoria_url %}
+                {% include 'components/modal_eliminar.html' %}
+            {% endwith %}
+        {% endwith %}
+    {% endfor %}
+{% endif %}
+{% endblock %}

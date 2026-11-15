@@ -1,0 +1,54 @@
+<div class="modal fade" id="modal-pago-{{ reserva.id }}" tabindex="-1"
+    aria-labelledby="titulo-modal-pago-{{ reserva.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="{% url 'reserva_cambiar_estado' reserva.id %}">
+                {% csrf_token %}
+
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="titulo-modal-pago-{{ reserva.id }}">
+                        Actualizar estado del pago
+                    </h2>
+
+                    <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>
+                        Reserva de
+                        <strong>
+                            {{ reserva.usuario.get_full_name|default:reserva.usuario.username }}
+                        </strong>
+                        para
+                        <strong>
+                            {{ reserva.experiencia.titulo }}
+                        </strong>.
+                    </p>
+
+                    <label class="form-label" for="estado-pago-{{ reserva.id }}">
+                        Estado del pago
+                    </label>
+
+                    <select class="form-select" id="estado-pago-{{ reserva.id }}" name="estado_pago" required>
+                        {% for valor, nombre in estados_pago %}
+                        <option value="{{ valor }}" {% if reserva.estado_pago == valor %} selected {% endif %}>
+                            {{ nombre }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-light" type="button" data-coreui-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-check-lg me-2"></i>
+                        Guardar estado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

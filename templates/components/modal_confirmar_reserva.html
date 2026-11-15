@@ -1,0 +1,71 @@
+<div class="modal fade" id="modal-reservar-{{ experiencia.id }}" tabindex="-1"
+    aria-labelledby="titulo-modal-reservar-{{ experiencia.id }}" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="titulo-modal-reservar-{{ experiencia.id }}">
+                    Confirmar reserva
+                </h2>
+
+                <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Cerrar">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>
+                    ¿Deseas reservar la siguiente experiencia?
+                </p>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">
+                        Experiencia
+                    </dt>
+
+                    <dd class="col-sm-8">
+                        {{ experiencia.titulo }}
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        Guia
+                    </dt>
+
+                    <dd class="col-sm-8">
+                        {{ experiencia.creador.get_full_name|default:experiencia.creador.username }}
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        Fecha
+                    </dt>
+
+                    <dd class="col-sm-8">
+                        {{ experiencia.fecha_hora|date:"d/m/Y H:i" }}
+                    </dd>
+
+                    <dt class="col-sm-4">
+                        Precio
+                    </dt>
+
+                    <dd class="col-sm-8">
+                        ${{ experiencia.precio }}
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-coreui-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <form method="post" action="{% url 'reserva_crear' experiencia.id %}">
+                    {% csrf_token %}
+
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Confirmar reserva
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Reservas | Aventuras del Sur
+{% endblock %}
+
+{% block encabezado %}
+<div class="page-heading">
+    <div>
+        {% if es_administrador %}
+        <h1>Gestion de reservas</h1>
+
+        <p class="page-subtitle">
+            Revisa las inscripciones y confirma sus pagos.
+        </p>
+        {% else %}
+        <h1>Mis reservas</h1>
+
+        <p class="page-subtitle">
+            Consulta las experiencias en las que te has inscrito.
+        </p>
+        {% endif %}
+    </div>
+
+    {% if not es_administrador %}
+    <a class="btn btn-primary" href="{% url 'catalogo_experiencias' %}">
+        <i class="bi bi-search me-2"></i>
+        Buscar experiencias
+    </a>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        {% if es_administrador %}
+        <strong>Reservas registradas</strong>
+        {% else %}
+        <strong>Historial de reservas</strong>
+        {% endif %}
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" data-datatable="true">
+                <thead>
+                    <tr>
+                        {% if es_administrador %}
+                        <th>Turista</th>
+                        {% endif %}
+
+                        <th>Experiencia</th>
+                        <th>Categoria</th>
+                        <th>Fecha de la experiencia</th>
+                        <th>Fecha de inscripcion</th>
+                        <th>Pago</th>
+
+                        <th class="text-end" data-dt-order="disable">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for reserva in reservas %}
+                    <tr>
+                        {% if es_administrador %}
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="avatar avatar-sm bg-info-subtle text-info">
+                                    <i class="bi bi-person"></i>
+                                </span>
+
+                                <div>
+                                    <strong>
+                                        {{ reserva.usuario.get_full_name|default:reserva.usuario.username }}
+                                    </strong>
+
+                                    <div class="small text-body-secondary">
+                                        {{ reserva.usuario.username }}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        {% endif %}
+
+                        <td>
+                            <strong>
+                                {{ reserva.experiencia.titulo }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ reserva.experiencia.categoria.nombre }}
+                        </td>
+
+                        <td data-order="{{ reserva.experiencia.fecha_hora|date:'Y-m-d H:i' }}">
+                            {{ reserva.experiencia.fecha_hora|date:"d/m/Y H:i" }}
+                        </td>
+
+                        <td data-order="{{ reserva.fecha_inscripcion|date:'Y-m-d H:i' }}">
+                            {{ reserva.fecha_inscripcion|date:"d/m/Y H:i" }}
+                        </td>
+
+                        <td>
+                            {% if reserva.estado_pago == 'confirmado' %}
+                            <span class="badge text-bg-success badge-status">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Confirmado
+                            </span>
+                            {% else %}
+                            <span class="badge text-bg-warning badge-status">
+                                <i class="bi bi-clock me-1"></i>
+                                Pendiente
+                            </span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="table-actions justify-content-end">
+                                <a class="btn btn-sm btn-outline-success" href="{% url 'ticket' reserva.pk %}">Ver reserva</a>
+                                {% if es_administrador %}
+                                <button class="btn btn-sm btn-outline-primary" type="button" data-coreui-toggle="modal"
+                                    data-coreui-target="#modal-pago-{{ reserva.id }}" title="Actualizar pago">
+                                    <i class="bi bi-credit-card"></i>
+
+                                    <span class="visually-hidden">
+                                        Actualizar pago
+                                    </span>
+                                </button>
+                                {% endif %}
+
+                                {% if perms.experiencias.delete_reserva %}
+                                <button class="btn btn-sm btn-outline-danger" type="button" data-coreui-toggle="modal"
+                                    data-coreui-target="#modal-eliminar-reserva-{{ reserva.id }}"
+                                    title="Eliminar reserva">
+                                    <i class="bi bi-trash"></i>
+
+                                    <span class="visually-hidden">
+                                        Eliminar
+                                    </span>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% for reserva in reservas %}
+    {% if es_administrador %}
+        {% include 'components/modal_estado_pago.html' %}
+    {% endif %}
+
+    {% if perms.experiencias.delete_reserva %}
+        {% url 'reserva_eliminar' reserva.id as eliminar_reserva_url %}
+
+        {% with modal_prefijo='reserva' objeto_id=reserva.id %}
+            {% with objeto_nombre=reserva.experiencia.titulo eliminar_url=eliminar_reserva_url %}
+                {% include 'components/modal_eliminar.html' %}
+            {% endwith %}
+        {% endwith %}
+    {% endif %}
+{% endfor %}
+{% endblock %}

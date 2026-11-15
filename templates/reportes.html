@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block encabezado %}<div class="page-heading"><h1>Reportes globales</h1></div>{% endblock %}
+{% block contenido %}
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-4"><div class="card card-body">Reservas totales<strong class="fs-3">{{ resumen.total }}</strong></div></div>
+    <div class="col-12 col-md-4"><div class="card card-body">Pagos confirmados<strong class="fs-3">{{ resumen.confirmadas }}</strong></div></div>
+    <div class="col-12 col-md-4"><div class="card card-body">Pagos pendientes<strong class="fs-3">{{ resumen.pendientes }}</strong></div></div>
+</div>
+<p>Importe de las reservas confirmadas, calculado al precio actual: <strong>${{ resumen.importe_confirmado|default:0 }}</strong></p>
+<div class="card card-body"><div class="table-responsive">
+    <table class="table" data-datatable="true"><thead><tr><th>Experiencia</th><th>Guia</th><th>Fecha</th><th>Inscritos</th><th>Cupo maximo</th></tr></thead>
+    <tbody>{% for experiencia in experiencias %}<tr><td>{{ experiencia.titulo }}</td><td>{{ experiencia.creador.username }}</td><td data-order="{{ experiencia.fecha_hora|date:'Y-m-d H:i' }}">{{ experiencia.fecha_hora|date:'d/m/Y H:i' }}</td><td>{{ experiencia.inscritos }}</td><td>{{ experiencia.cupo_maximo }}</td></tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}

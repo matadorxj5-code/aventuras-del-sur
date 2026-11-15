@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Bienvenido | Aventuras del Sur{% endblock %}
+
+{% block contenido %}
+<section class="card mb-4">
+    <div class="card-body p-4 p-md-5">
+        <p class="text-success fw-semibold">ECOPARQUE Y RESERVA NATURAL</p>
+        <h1 class="mb-3">{{ parque.nombre|default:'Aventuras del Sur' }}</h1>
+        <p class="lead">{{ parque.descripcion|default:'Disfruta la naturaleza y descubre experiencias al aire libre.' }}</p>
+        {% if parque.contacto %}<p>Contacto: <a href="mailto:{{ parque.contacto }}">{{ parque.contacto }}</a></p>{% endif %}
+        <p>Explora nuestro catalogo para conocer las actividades, sus precios, fechas y cupos disponibles.</p>
+        <a class="btn btn-success" href="{% url 'catalogo_experiencias' %}">Ver experiencias</a>
+    </div>
+</section>
+<section aria-labelledby="actividades-titulo">
+    <h2 class="h4 mb-3" id="actividades-titulo">Actividades del parque</h2>
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h3 class="h5">Trekking</h3>
+                <p class="mb-0">Recorre senderos y disfruta los paisajes del sur.</p>
+            </div></div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h3 class="h5">Canopy</h3>
+                <p class="mb-0">Vive una aventura entre los arboles del parque.</p>
+            </div></div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h3 class="h5">Kayak</h3>
+                <p class="mb-0">Descubre el entorno natural desde el agua.</p>
+            </div></div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100"><div class="card-body">
+                <h3 class="h5">Arriendo de equipos</h3>
+                <p class="mb-0">Encuentra equipos para tus actividades al aire libre.</p>
+            </div></div>
+        </div>
+    </div>
+</section>
+<p class="mt-4">Para reservar una experiencia, <a href="{% url 'login' %}?next={% url 'catalogo_experiencias' %}">inicia sesion con tu cuenta de turista</a>.</p>
+{% endblock %}

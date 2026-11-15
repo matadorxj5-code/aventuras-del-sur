@@ -1,0 +1,7 @@
+{
+  "NAME": "aventura_db",
+  "USER": "admin",
+  "PASSWORD": "TU_CLAVE_MYSQL",
+  "HOST": "localhost",
+  "PORT": "3306"
+}

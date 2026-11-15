@@ -1,0 +1,48 @@
+<div class="modal fade" id="modal-eliminar-{{ modal_prefijo }}-{{ objeto_id }}" tabindex="-1"
+    aria-labelledby="titulo-modal-{{ modal_prefijo }}-{{ objeto_id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="titulo-modal-{{ modal_prefijo }}-{{ objeto_id }}">
+                    Confirmar eliminacion
+                </h2>
+
+                <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="d-flex gap-3">
+                    <div class="text-danger fs-2">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+
+                    <div>
+                        <p class="mb-2">
+                            ¿Confirmas que deseas eliminar
+                            <strong>{{ objeto_nombre }}</strong>?
+                        </p>
+
+                        <p class="text-body-secondary mb-0">
+                            Esta accion no se puede deshacer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-coreui-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <form method="post" action="{{ eliminar_url }}">
+                    {% csrf_token %}
+
+                    <button class="btn btn-danger" type="submit">
+                        <i class="bi bi-trash me-2"></i>
+                        Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

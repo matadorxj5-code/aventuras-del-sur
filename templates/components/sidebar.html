@@ -1,0 +1,129 @@
+<aside class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
+    <div class="sidebar-header border-bottom">
+        <div class="sidebar-brand">
+
+            <span class="sidebar-brand-text">
+                Aventuras del Sur
+            </span>
+        </div>
+    </div>
+
+    <ul class="sidebar-nav" data-coreui="navigation">
+        <li class="nav-title">
+            Navegacion
+        </li>
+        {% if not user.is_authenticated or perms.auth.view_user %}
+        <li class="nav-item">
+            <a class="nav-link
+                {% if request.resolver_match.url_name == 'inicio' %}
+                    active
+                {% endif %}" href="{% url 'inicio' %}">
+                <i class="nav-icon bi bi-house-door"></i>
+                Inicio
+            </a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link
+                {% if request.resolver_match.url_name == 'catalogo_experiencias' %}
+                    active
+                {% endif %}" href="{% url 'catalogo_experiencias' %}">
+                <i class="nav-icon bi bi-map"></i>
+                Catalogo
+            </a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'mi_perfil' %}"><i class="nav-icon bi bi-person"></i>Mi perfil</a></li>
+        {% if perms.experiencias.view_experiencia %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'calendario' %}"><i class="nav-icon bi bi-calendar"></i>Calendario</a></li>
+        {% endif %}
+        {% if perms.auth.view_user %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'usuario_lista' %}?rol=guia"><i class="nav-icon bi bi-people"></i>Gestion de guias</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'configuracion_parque' %}"><i class="nav-icon bi bi-gear"></i>Configuracion</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'reportes' %}"><i class="nav-icon bi bi-bar-chart"></i>Reportes globales</a></li>
+        {% endif %}
+        {% if perms.auth.view_user or perms.experiencias.view_categoria or perms.experiencias.view_experiencia %}
+        <li class="nav-title">
+            Administracion
+        </li>
+        {% endif %}
+
+        {% if perms.auth.view_user %}
+        <li class="nav-item">
+            <a class="nav-link
+                        {% if '/cuentas/usuarios/' in request.path %}
+                            active
+                        {% endif %}" href="{% url 'usuario_lista' %}">
+                <i class="nav-icon bi bi-people"></i>
+                Usuarios
+            </a>
+        </li>
+        {% endif %}
+
+        {% if perms.experiencias.view_categoria %}
+        <li class="nav-item">
+            <a class="nav-link
+                        {% if '/experiencias/categorias/' in request.path %}
+                            active
+                        {% endif %}" href="{% url 'categoria_lista' %}">
+                <i class="nav-icon bi bi-tags"></i>
+                Categorias
+            </a>
+        </li>
+        {% endif %}
+
+        {% if perms.experiencias.view_experiencia %}
+        <li class="nav-item">
+            <a class="nav-link
+                        {% if request.resolver_match.url_name == 'experiencia_lista' or request.resolver_match.url_name == 'experiencia_crear' or request.resolver_match.url_name == 'experiencia_editar' %}
+                            active
+                        {% endif %}" href="{% url 'experiencia_lista' %}">
+                <i class="nav-icon bi bi-compass"></i>
+                Experiencias
+            </a>
+        </li>
+        {% endif %}
+
+        {% if perms.experiencias.view_reserva %}
+        <li class="nav-title">
+            Reservas
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link
+                        {% if '/experiencias/reservas/' in request.path %}
+                            active
+                        {% endif %}" href="{% url 'reserva_lista' %}">
+                <i class="nav-icon bi bi-calendar-check"></i>
+
+                {% if perms.experiencias.change_reserva %}
+                Gestion de reservas
+                {% else %}
+                Mis reservas
+                {% endif %}
+            </a>
+        </li>
+        {% endif %}
+        {% else %}
+        <li class="nav-title">
+            Cuenta
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">
+                <i class="nav-icon bi bi-box-arrow-in-right"></i>
+                Iniciar sesion
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <div class="sidebar-footer border-top d-lg-none">
+        <button class="btn btn-link text-white text-decoration-none w-100" type="button" data-coreui-toggle="sidebar"
+            data-coreui-target="#sidebar">
+            <i class="bi bi-x-lg me-2"></i>
+            Cerrar menu
+        </button>
+    </div>
+</aside>
