@@ -127,7 +127,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$4Fl02CvUzs30d8XglERkES$rBLDE7LduGbj+osinDExHZg3XDBkthV5FM2hFXMZbA0=','2026-11-13 17:47:05.637874',1,'admin','','','',1,1,'2026-11-13 17:41:15.430490'),(2,'pbkdf2_sha256$1200000$8RlblSSpSm3PokadM09y6R$wcEzq2c3qMNzdCvAjlwW5sXSe09tQ/G0qR7wqINv/b4=','2026-11-15 17:14:08.110257',0,'lamineyamal','Lamine','Yamal','lamineyamal@gmail.com',0,1,'2026-11-13 17:50:04.391592'),(3,'pbkdf2_sha256$1200000$N3iYGBSiG0puK6MRYFR4pp$c5AmLpdei1iP23/xrn4zGSXgpzOzEqM+DaYyLZA0fUU=','2026-11-15 17:14:40.801913',0,'pedrigonzalez','Pedro','Gonzalez','pedrigonzalez@gmail.com',0,1,'2026-11-13 17:52:12.962439'),(4,'pbkdf2_sha256$1200000$PyNwFO8bXg3ORyzBNL0hUb$0roB+yeriMgVvnUmlPmFKoH+FP+GGIqVdF18BZJhnuY=','2026-11-13 21:30:03.099058',0,'ferminlopez','Fermin','Lopez','ferminlopez@gmail.com',0,1,'2026-11-13 17:52:38.634246'),(5,'pbkdf2_sha256$1200000$iK2X0V8CC1b9Um6y8YiWho$YwrHzOjdyaqtlxArsiQJvEFkEPkakl87qWcwlMltXX8=','2026-11-15 17:09:09.970967',0,'ericgarcia','Eric','Garcia','ericgarcia@gmail.com',0,1,'2026-11-13 17:53:50.508982'),(6,'pbkdf2_sha256$1200000$3pmx5DUm5UValrbkLJwf9P$hmBMN68rXMAbZorR4+YckpGBRFk8qQv1DyWqc8BDqxk=','2026-11-13 21:28:47.045499',0,'daniolmo','Daniel','Olmo','daniolmo@gmail.com',0,1,'2026-11-13 17:54:20.192809');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$1200000$4Fl02CvUzs30d8XglERkES$rBLDE7LduGbj+osinDExHZg3XDBkthV5FM2hFXMZbA0=','2026-11-13 17:47:05.637874',1,'admin','','','',1,1,'2026-11-13 17:41:15.430490'),(2,'pbkdf2_sha256$1200000$8RlblSSpSm3PokadM09y6R$wcEzq2c3qMNzdCvAjlwW5sXSe09tQ/G0qR7wqINv/b4=','2026-11-15 17:25:04.815607',0,'lamineyamal','Lamine','Yamal','lamineyamal@gmail.com',0,1,'2026-11-13 17:50:04.391592'),(3,'pbkdf2_sha256$1200000$N3iYGBSiG0puK6MRYFR4pp$c5AmLpdei1iP23/xrn4zGSXgpzOzEqM+DaYyLZA0fUU=','2026-11-15 17:25:36.549293',0,'pedrigonzalez','Pedro','Gonzalez','pedrigonzalez@gmail.com',0,1,'2026-11-13 17:52:12.962439'),(4,'pbkdf2_sha256$1200000$PyNwFO8bXg3ORyzBNL0hUb$0roB+yeriMgVvnUmlPmFKoH+FP+GGIqVdF18BZJhnuY=','2026-11-13 21:30:03.099058',0,'ferminlopez','Fermin','Lopez','ferminlopez@gmail.com',0,1,'2026-11-13 17:52:38.634246'),(5,'pbkdf2_sha256$1200000$iK2X0V8CC1b9Um6y8YiWho$YwrHzOjdyaqtlxArsiQJvEFkEPkakl87qWcwlMltXX8=','2026-11-16 14:42:58.064629',0,'ericgarcia','Eric','Garcia','ericgarcia@gmail.com',0,1,'2026-11-13 17:53:50.508982'),(6,'pbkdf2_sha256$1200000$3pmx5DUm5UValrbkLJwf9P$hmBMN68rXMAbZorR4+YckpGBRFk8qQv1DyWqc8BDqxk=','2026-11-13 21:28:47.045499',0,'daniolmo','Daniel','Olmo','daniolmo@gmail.com',0,1,'2026-11-13 17:54:20.192809');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,7 +416,7 @@ CREATE TABLE `experiencias_reserva` (
   CONSTRAINT `experiencias_reserva_usuario_id_8724df18_fk_auth_user_id` FOREIGN KEY (`usuario_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `experiencias_reserva_chk_1` CHECK ((`valoracion` >= 0)),
   CONSTRAINT `reserva_valoracion_valida` CHECK (((`valoracion` is null) or ((`valoracion` >= 1) and (`valoracion` <= 5))))
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -425,7 +425,7 @@ CREATE TABLE `experiencias_reserva` (
 
 LOCK TABLES `experiencias_reserva` WRITE;
 /*!40000 ALTER TABLE `experiencias_reserva` DISABLE KEYS */;
-INSERT INTO `experiencias_reserva` VALUES (1,'2026-11-13 18:25:50.084552','confirmado',1,6,0,'',NULL),(4,'2026-11-13 20:50:55.125071','pendiente',1,5,0,'',NULL),(5,'2026-11-13 21:28:07.064750','pendiente',2,5,0,'',NULL),(6,'2026-11-15 16:56:39.392152','pendiente',4,5,0,'',NULL),(7,'2026-11-15 16:56:39.399020','pendiente',7,6,0,'',NULL),(8,'2026-11-15 16:56:39.404696','pendiente',8,6,0,'',NULL);
+INSERT INTO `experiencias_reserva` VALUES (1,'2026-11-13 18:25:50.084552','confirmado',1,6,0,'',NULL),(4,'2026-11-13 20:50:55.125071','pendiente',1,5,0,'',NULL),(5,'2026-11-13 21:28:07.064750','pendiente',2,5,0,'',NULL),(6,'2026-11-15 16:56:39.392152','pendiente',4,5,0,'',NULL),(7,'2026-11-15 16:56:39.399020','pendiente',7,6,0,'',NULL),(8,'2026-11-15 16:56:39.404696','pendiente',8,6,0,'',NULL),(9,'2026-11-16 14:43:19.646293','pendiente',5,5,0,'',NULL);
 /*!40000 ALTER TABLE `experiencias_reserva` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -438,7 +438,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-15 14:14:49
+-- Dump completed on 2026-11-16 13:41:00
 -- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
 -- Host: localhost    Database: aventura_db
@@ -481,4 +481,4 @@ CREATE TABLE `django_session` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-15 14:14:49
+-- Dump completed on 2026-11-16 13:41:00

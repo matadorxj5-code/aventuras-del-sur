@@ -5,8 +5,9 @@ Catalogo | Aventuras del Sur
 {% endblock %}
 
 {% block encabezado %}
-<div class="page-heading">
+<div class="page-heading catalogo-encabezado">
     <div>
+        <p class="catalogo-etiqueta">EXPLORA AVENTURAS DEL SUR</p>
         <h1>Catalogo de experiencias</h1>
 
         <p class="page-subtitle">
@@ -24,14 +25,14 @@ Catalogo | Aventuras del Sur
 {% endblock %}
 
 {% block contenido %}
-<div class="card">
+<div class="card catalogo-panel">
     <div class="card-header">
-        <strong>Proximas experiencias</strong>
+        <strong><i class="bi bi-compass me-2" aria-hidden="true"></i>Proximas experiencias</strong>
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0" data-datatable="true">
+            <table class="table table-hover align-middle mb-0 catalogo-tabla" data-datatable="true">
                 <thead>
                     <tr>
                         <th>Experiencia</th>
@@ -63,11 +64,11 @@ Catalogo | Aventuras del Sur
                         </td>
 
                         <td>
-                            {{ experiencia.categoria.nombre }}
+                            <span class="catalogo-categoria">{{ experiencia.categoria.nombre }}</span>
                         </td>
 
-                        <td>
-                            <strong>
+                        <td data-order="{{ experiencia.precio }}">
+                            <strong class="catalogo-precio">
                                 ${{ experiencia.precio }}
                             </strong>
                         </td>

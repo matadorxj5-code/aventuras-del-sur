@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block titulo %}Pago de reserva | Aventuras del Sur{% endblock %}
+{% block encabezado %}
+<div class="page-heading catalogo-encabezado">
+    <div><p class="catalogo-etiqueta">AVENTURAS DEL SUR</p><h1>Pago de mi reserva</h1><p class="page-subtitle">Consulta el precio y la confirmacion de tu pago.</p></div>
+    <a class="btn" href="{% url 'reserva_lista' %}">Volver a reservas</a>
+</div>
+{% endblock %}
+{% block contenido %}
+<div class="row g-4">
+    <div class="col-12 col-lg-7">
+        <section class="card catalogo-panel h-100">
+            <div class="card-header"><strong>Resumen de reserva #{{ reserva.pk }}</strong></div>
+            <div class="card-body">
+                <h2 class="h4 mb-4">{{ reserva.experiencia.titulo }}</h2>
+                <dl class="row">
+                    <dt class="col-sm-4">Turista</dt><dd class="col-sm-8">{{ reserva.usuario.get_full_name|default:reserva.usuario.username }}</dd>
+                    <dt class="col-sm-4">Fecha y hora</dt><dd class="col-sm-8">{{ reserva.experiencia.fecha_hora|date:'d/m/Y H:i' }}</dd>
+                    <dt class="col-sm-4">Participantes</dt><dd class="col-sm-8">1 persona</dd>
+                    <dt class="col-sm-4">Precio actual</dt><dd class="col-sm-8 fw-bold catalogo-precio">${{ reserva.experiencia.precio }}</dd>
+                </dl>
+                <a class="btn btn-outline-success" href="{% url 'ticket' reserva.pk %}">Ver comprobante de reserva</a>
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-lg-5">
+        <section class="card catalogo-panel h-100">
+            <div class="card-header"><strong>Estado del pago</strong></div>
+            <div class="card-body">
+                {% if reserva.estado_pago == 'confirmado' %}
+                <span class="badge text-bg-success mb-3 p-2">Confirmado</span>
+                <h2 class="h4">Pago confirmado</h2>
+                <p>Administracion registro el pago de esta reserva como confirmado.</p>
+                {% else %}
+                <span class="badge text-bg-warning mb-3 p-2">Pendiente</span>
+                <h2 class="h4">Pendiente de confirmacion</h2>
+                <p>Contacta con administracion del parque para coordinar el pago e indica tu numero de reserva: <strong>#{{ reserva.pk }}</strong>.</p>
+                {% endif %}
+                {% if perms.experiencias.change_reserva %}
+                <button class="btn btn-success" type="button" data-coreui-toggle="modal" data-coreui-target="#modal-pago-{{ reserva.pk }}">Actualizar estado del pago</button>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</div>
+<section class="card catalogo-panel mt-4">
+    <div class="card-header"><strong>Pago de demostracion</strong><span class="badge text-bg-warning ms-2">SIMULACION</span></div>
+    <div class="card-body">
+        {% if pago_demo %}
+        <h2 class="h4 text-success">Pago simulado aprobado</h2>
+        <p class="small text-body-secondary">Comprobante simulado, sin cobro real.</p>
+        <dl class="row">
+            <dt class="col-sm-4">Referencia</dt><dd class="col-sm-8">{{ pago_demo.referencia }}</dd>
+            <dt class="col-sm-4">Monto simulado</dt><dd class="col-sm-8">${{ pago_demo.monto }}</dd>
+            <dt class="col-sm-4">Fecha</dt><dd class="col-sm-8">{{ pago_demo.fecha }}</dd>
+            <dt class="col-sm-4">Medio de prueba</dt><dd class="col-sm-8">Tarjeta ficticia terminada en 4242</dd>
+        </dl>
+        {% elif reserva.estado_pago == 'confirmado' %}
+        <p class="mb-0">Elige una reserva pendiente para probar el pago.</p>
+        {% else %}
+        <h2 class="h4">Prueba el pago de tu reserva</h2>
+        <p>Tarjeta de prueba: <strong>4242</strong>.</p>
+        <p class="fs-5">Monto de demostracion: <strong>${{ reserva.experiencia.precio }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="confirmar-simulacion" name="confirmar_simulacion" value="si" required>
+                <label class="form-check-label" for="confirmar-simulacion">Confirmar simulacion sin cobro.</label>
+            </div>
+            <button class="btn btn-success" type="submit">Simular pago de ${{ reserva.experiencia.precio }}</button>
+        </form>
+        {% endif %}
+    </div>
+</section>
+{% if perms.experiencias.change_reserva %}{% include 'components/modal_estado_pago.html' %}{% endif %}
+{% endblock %}

@@ -153,6 +153,23 @@ body {
 .auth-card {
     width: 100%;
     max-width: 28rem;
+    border-radius: 1.75rem;
+    box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.3), 0 0 1rem rgba(0, 0, 0, 0.12);
+    font-weight: 700;
+}
+
+.auth-card h1,
+.auth-card .form-control,
+.auth-card .btn {
+    font-weight: 700;
+}
+
+.auth-card .input-group {
+    --cui-border-radius: 0.85rem;
+}
+
+.auth-card .btn {
+    border-radius: 0.85rem;
 }
 
 .auth-brand {
@@ -271,5 +288,248 @@ body {
     .dt-container .dt-search input {
         flex-grow: 1;
         min-width: 0;
+    }
+}
+
+.actividad-card {
+    color: #fff;
+}
+
+.actividad-trekking {
+    background: linear-gradient(120deg, #35694c 0%, #79563d 100%);
+}
+
+.actividad-canopy {
+    background: linear-gradient(120deg, #5e646b 0%, #777c82 100%);
+}
+
+.actividad-kayak {
+    background: linear-gradient(120deg, #28658a 0%, #8ed3ed 100%);
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 25, 45, 0.65);
+}
+
+.actividad-equipos {
+    background-color: #bd343b;
+}
+
+.bienvenida-parque {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 1.75rem;
+    border: 1px solid rgba(225, 206, 168, 0.25);
+    background: linear-gradient(115deg, #203e31 0%, #345744 65%, #655741 100%);
+    color: #f9f5eb;
+    box-shadow: 0 14px 32px rgba(27, 55, 41, 0.2);
+}
+
+.bienvenida-paisaje {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bienvenida-parque .card-body {
+    background: linear-gradient(90deg, rgba(32, 62, 49, 0.7), transparent);
+}
+
+.bienvenida-parque h1 {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+}
+
+.bienvenida-etiqueta {
+    display: inline-block;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba(231, 211, 172, 0.35);
+    border-radius: 2rem;
+    color: #eed9b2;
+    background: rgba(15, 37, 27, 0.35);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.bienvenida-parque .lead {
+    max-width: 36rem;
+    font-weight: 600;
+}
+
+.bienvenida-parque p:not(.bienvenida-etiqueta) {
+    max-width: 39rem;
+    line-height: 1.65;
+}
+
+.bienvenida-parque a:not(.bienvenida-boton) {
+    color: #f1d8a8;
+}
+
+.bienvenida-boton {
+    --cui-btn-color: #243e30;
+    --cui-btn-bg: #ead6ae;
+    --cui-btn-border-color: #ead6ae;
+    --cui-btn-hover-color: #203829;
+    --cui-btn-hover-bg: #f5e5c7;
+    --cui-btn-hover-border-color: #f5e5c7;
+    --cui-btn-active-color: #203829;
+    --cui-btn-active-bg: #dfc496;
+    --cui-btn-active-border-color: #dfc496;
+    --cui-btn-focus-shadow-rgb: 234, 214, 174;
+    padding: 0.75rem 1.2rem;
+    margin-top: 0.35rem;
+    border-radius: 0.85rem;
+    font-weight: 700;
+}
+
+.bienvenida-boton span {
+    margin-left: 0.6rem;
+}
+
+.catalogo-encabezado {
+    padding: 28px;
+    border-radius: 24px;
+    background: linear-gradient(115deg, #254b38, #46654e);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(32, 62, 49, 0.16);
+}
+
+.catalogo-etiqueta {
+    margin-bottom: 10px;
+    color: #ead6ae;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.catalogo-encabezado .page-subtitle {
+    color: #e1e9df;
+}
+
+.catalogo-encabezado .btn {
+    background: #ead6ae;
+    border-color: #ead6ae;
+    color: #294833;
+    border-radius: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.catalogo-encabezado .btn:hover {
+    background: #f5e5c7;
+    border-color: #f5e5c7;
+}
+
+.catalogo-panel {
+    border: 1px solid #e1e5dc;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 14px 32px rgba(32, 62, 49, 0.18), 0 3px 10px rgba(32, 62, 49, 0.1);
+}
+
+.catalogo-panel .card-header {
+    padding: 18px 24px;
+    background: #f5f2eb;
+    color: #75583d;
+}
+
+.catalogo-panel .card-body {
+    padding: 24px;
+}
+
+.catalogo-tabla {
+    --cui-table-hover-bg: #f0f5ed;
+    --cui-table-border-color: #e4e9df;
+}
+
+.catalogo-tabla thead th {
+    background: #e8eee3;
+    color: #2b4935;
+    padding: 14px 12px;
+}
+
+.catalogo-tabla td {
+    padding: 18px 12px;
+}
+
+.catalogo-tabla td:first-child a {
+    color: #30563e;
+    text-decoration: none;
+}
+
+.catalogo-tabla td:first-child a:hover {
+    text-decoration: underline;
+}
+
+.catalogo-tabla .table-description {
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.catalogo-categoria {
+    display: inline-block;
+    padding: 6px 10px;
+    background: #f2e9da;
+    color: #6b5036;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.catalogo-precio {
+    color: #75583d;
+    white-space: nowrap;
+}
+
+.catalogo-tabla .btn {
+    border-radius: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.catalogo-tabla .btn-primary {
+    background: #35694c;
+    border-color: #35694c;
+}
+
+.catalogo-tabla .btn-primary:hover {
+    background: #254d37;
+    border-color: #254d37;
+}
+
+.catalogo-tabla .btn-outline-primary {
+    color: #35694c;
+    border-color: #35694c;
+}
+
+.catalogo-tabla .btn-outline-primary:hover {
+    color: #fff;
+    background: #35694c;
+}
+
+.catalogo-panel .dt-search input,
+.catalogo-panel .dt-length select {
+    border-radius: 10px;
+    border-color: #bccab7;
+}
+
+.catalogo-panel .pagination {
+    --cui-pagination-color: #35694c;
+    --cui-pagination-active-bg: #35694c;
+    --cui-pagination-active-border-color: #35694c;
+    --cui-pagination-hover-color: #254d37;
+}
+
+@media (max-width: 575.98px) {
+    .catalogo-encabezado {
+        padding: 22px;
+    }
+
+    .catalogo-panel .card-body {
+        padding: 16px;
     }
 }

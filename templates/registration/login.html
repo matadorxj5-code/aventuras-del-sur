@@ -5,7 +5,7 @@ Iniciar sesion | Aventuras del Sur
 {% endblock %}
 
 {% block contenido %}
-<div class="card auth-card shadow-lg">
+<div class="card auth-card">
     <div class="card-body p-4 p-md-5">
         <div class="auth-brand">
 
@@ -79,6 +79,9 @@ Iniciar sesion | Aventuras del Sur
                 Ingresar
             </button>
         </form>
+        <div class="text-center mt-3">
+            <a class="text-success" href="{% url 'recuperar_demo' %}">Olvide mi contraseña</a>
+        </div>
 
     </div>
 </div>

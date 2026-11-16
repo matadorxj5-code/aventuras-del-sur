@@ -17,7 +17,7 @@ def inicio(request):
         return render(request, 'inicio.html')
 
     if request.user.has_perm('experiencias.add_experiencia'):
-        return redirect('experiencia_lista')
+        return redirect('panel_guia')
 
     if request.user.has_perm('experiencias.add_reserva'):
         return redirect('catalogo_experiencias')

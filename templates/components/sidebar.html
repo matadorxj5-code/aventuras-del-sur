@@ -34,6 +34,9 @@
         </li>
 
         {% if user.is_authenticated %}
+        {% if perms.experiencias.view_experiencia and not perms.experiencias.delete_experiencia %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'panel_guia' %}"><i class="nav-icon bi bi-house-door"></i>Panel del guia</a></li>
+        {% endif %}
         <li class="nav-item"><a class="nav-link" href="{% url 'mi_perfil' %}"><i class="nav-icon bi bi-person"></i>Mi perfil</a></li>
         {% if perms.experiencias.view_experiencia %}
         <li class="nav-item"><a class="nav-link" href="{% url 'calendario' %}"><i class="nav-icon bi bi-calendar"></i>Calendario</a></li>
@@ -80,7 +83,7 @@
                             active
                         {% endif %}" href="{% url 'experiencia_lista' %}">
                 <i class="nav-icon bi bi-compass"></i>
-                Experiencias
+                {% if perms.experiencias.delete_experiencia %}Experiencias{% else %}Mis tours{% endif %}
             </a>
         </li>
         {% endif %}
@@ -116,6 +119,9 @@
                 Iniciar sesion
             </a>
         </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="nav-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-link w-100 border-0 text-start" type="submit"><i class="nav-icon bi bi-box-arrow-right"></i>Cerrar sesion</button></form></li>
         {% endif %}
     </ul>
 

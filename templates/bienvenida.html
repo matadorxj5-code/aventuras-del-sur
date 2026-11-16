@@ -3,39 +3,46 @@
 {% block titulo %}Bienvenido | Aventuras del Sur{% endblock %}
 
 {% block contenido %}
-<section class="card mb-4">
+<section class="card mb-4 bienvenida-parque">
+    <svg class="bienvenida-paisaje" viewBox="0 0 1000 400" preserveAspectRatio="xMaxYMax slice" aria-hidden="true" focusable="false">
+        <circle cx="825" cy="90" r="48" fill="#e5c995" opacity="0.18" />
+        <path d="M350 400 590 100 735 290 865 160 1050 400Z" fill="#9bb3a0" opacity="0.18" />
+        <path d="m550 150 40-50 43 56-32-10-15 11-12-15Z" fill="#f5eddb" opacity="0.3" />
+        <path d="M430 400 660 230 790 330 930 200 1100 400Z" fill="#142e24" opacity="0.5" />
+        <path d="M0 400Q210 325 420 375T1000 340V400Z" fill="#b18b58" opacity="0.16" />
+    </svg>
     <div class="card-body p-4 p-md-5">
-        <p class="text-success fw-semibold">ECOPARQUE Y RESERVA NATURAL</p>
+        <p class="bienvenida-etiqueta">ECOPARQUE Y RESERVA NATURAL</p>
         <h1 class="mb-3">{{ parque.nombre|default:'Aventuras del Sur' }}</h1>
         <p class="lead">{{ parque.descripcion|default:'Disfruta la naturaleza y descubre experiencias al aire libre.' }}</p>
         {% if parque.contacto %}<p>Contacto: <a href="mailto:{{ parque.contacto }}">{{ parque.contacto }}</a></p>{% endif %}
         <p>Explora nuestro catalogo para conocer las actividades, sus precios, fechas y cupos disponibles.</p>
-        <a class="btn btn-success" href="{% url 'catalogo_experiencias' %}">Ver experiencias</a>
+        <a class="btn bienvenida-boton" href="{% url 'catalogo_experiencias' %}">Ver experiencias <span aria-hidden="true">&rarr;</span></a>
     </div>
 </section>
 <section aria-labelledby="actividades-titulo">
     <h2 class="h4 mb-3" id="actividades-titulo">Actividades del parque</h2>
     <div class="row g-3">
         <div class="col-12 col-md-6">
-            <div class="card h-100"><div class="card-body">
+            <div class="card h-100 actividad-card actividad-trekking"><div class="card-body">
                 <h3 class="h5">Trekking</h3>
                 <p class="mb-0">Recorre senderos y disfruta los paisajes del sur.</p>
             </div></div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="card h-100"><div class="card-body">
+            <div class="card h-100 actividad-card actividad-canopy"><div class="card-body">
                 <h3 class="h5">Canopy</h3>
                 <p class="mb-0">Vive una aventura entre los arboles del parque.</p>
             </div></div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="card h-100"><div class="card-body">
+            <div class="card h-100 actividad-card actividad-kayak"><div class="card-body">
                 <h3 class="h5">Kayak</h3>
                 <p class="mb-0">Descubre el entorno natural desde el agua.</p>
             </div></div>
         </div>
         <div class="col-12 col-md-6">
-            <div class="card h-100"><div class="card-body">
+            <div class="card h-100 actividad-card actividad-equipos"><div class="card-body">
                 <h3 class="h5">Arriendo de equipos</h3>
                 <p class="mb-0">Encuentra equipos para tus actividades al aire libre.</p>
             </div></div>

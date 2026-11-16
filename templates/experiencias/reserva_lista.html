@@ -120,6 +120,7 @@ Reservas | Aventuras del Sur
                         <td>
                             <div class="table-actions justify-content-end">
                                 <a class="btn btn-sm btn-outline-success" href="{% url 'ticket' reserva.pk %}">Ver reserva</a>
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'pago' reserva.pk %}">Ver pago</a>
                                 {% if es_administrador %}
                                 <button class="btn btn-sm btn-outline-primary" type="button" data-coreui-toggle="modal"
                                     data-coreui-target="#modal-pago-{{ reserva.id }}" title="Actualizar pago">

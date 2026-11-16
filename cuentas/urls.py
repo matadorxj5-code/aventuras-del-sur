@@ -2,9 +2,11 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 from .forms import InicioSesionForm
 from . import views
+from .recuperacion_demo import recuperar_demo
 
 
 urlpatterns = [
+    path('recuperar-demo/', recuperar_demo, name='recuperar_demo'),
     path('perfil/', views.mi_perfil, name='mi_perfil'),
     path(
         'login/',

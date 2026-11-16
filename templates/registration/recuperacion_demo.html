@@ -1,0 +1,33 @@
+{% extends 'base_auth.html' %}
+{% block titulo %}Recuperar clave | Aventuras del Sur{% endblock %}
+{% block contenido %}
+<section class="card auth-card"><div class="card-body p-4">
+    <h1 class="h4 text-success mb-2">Recuperar clave</h1>
+    {% if paso == 'correo' %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'components/form_fields.html' %}
+        <button class="btn btn-success w-100" type="submit">Continuar</button>
+    </form>
+    {% elif paso == 'enlace' %}
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-success w-100" name="accion" value="abrir">Crear nueva clave</button>
+    </form>
+    {% elif paso == 'clave' %}
+    <p class="small">Minimo 8 caracteres.</p>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'components/form_fields.html' %}
+        <button class="btn btn-success w-100" type="submit">Confirmar prueba</button>
+    </form>
+    {% endif %}
+    <a class="d-block text-center text-success mt-3" href="{% url 'login' %}">Volver al inicio de sesion</a>
+    {% if paso != 'correo' %}
+    <form method="post" class="text-center mt-2">
+        {% csrf_token %}
+        <button class="btn btn-link text-secondary btn-sm" name="accion" value="reiniciar">Volver a probar</button>
+    </form>
+    {% endif %}
+</div></section>
+{% endblock %}

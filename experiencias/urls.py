@@ -5,6 +5,8 @@ from . import recorridos
 
 
 urlpatterns = [
+    path('panel-guia/', recorridos.panel_guia, name='panel_guia'),
+    path('reservas/<int:reserva_id>/pago/', recorridos.pago, name='pago'),
     path('calendario/', recorridos.calendario, name='calendario'),
     path('<int:experiencia_id>/detalle/', recorridos.experiencia_detalle, name='experiencia_detalle'),
     path('<int:experiencia_id>/grupo/', recorridos.grupo, name='grupo'),

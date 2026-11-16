@@ -1,4 +1,5 @@
 import calendar
+from uuid import uuid4
 from datetime import date, datetime, time
 
 from django.contrib import messages
@@ -17,6 +18,13 @@ def experiencias_propias(usuario):
     if not usuario.has_perm('experiencias.delete_experiencia'):
         experiencias = experiencias.filter(creador=usuario)
     return experiencias
+
+
+@login_required
+@permission_required('experiencias.view_experiencia', raise_exception=True)
+def panel_guia(request):
+    experiencias = experiencias_propias(request.user).select_related('categoria').order_by('fecha_hora')
+    return render(request, 'experiencias/panel_guia.html', {'experiencias': experiencias})
 
 
 def experiencia_detalle(request, experiencia_id):
@@ -99,3 +107,31 @@ def valorar(request, reserva_id):
         messages.success(request, 'Tu valoracion fue guardada.')
         return redirect('ticket', reserva_id=reserva.pk)
     return render(request, 'formulario_general.html', {'formulario': formulario, 'titulo': 'Valorar ' + reserva.experiencia.titulo})
+
+
+@login_required
+@permission_required('experiencias.view_reserva', raise_exception=True)
+def pago(request, reserva_id):
+    reservas = Reserva.objects.select_related('usuario', 'experiencia')
+    if not request.user.has_perm('experiencias.change_reserva'):
+        reservas = reservas.filter(usuario=request.user)
+    reserva = get_object_or_404(reservas, pk=reserva_id)
+    clave_demo = f'pago_demo_{request.user.pk}_{reserva.pk}'
+    if request.method == 'POST':
+        if request.POST.get('confirmar_simulacion') != 'si':
+            return HttpResponseBadRequest('Debes confirmar la simulacion.')
+        if reserva.estado_pago == Reserva.CONFIRMADO:
+            messages.info(request, 'Esta reserva ya tiene su pago confirmado.')
+        elif clave_demo not in request.session:
+            request.session[clave_demo] = {
+                'referencia': 'DEMO-' + uuid4().hex[:10].upper(),
+                'monto': reserva.experiencia.precio,
+                'fecha': timezone.localtime().strftime('%d/%m/%Y %H:%M'),
+            }
+            messages.success(request, 'Simulacion aprobada. No se realizo ningun cobro.')
+        return redirect('pago', reserva_id=reserva.pk)
+    return render(request, 'experiencias/pago.html', {
+        'reserva': reserva,
+        'estados_pago': Reserva.ESTADOS_PAGO,
+        'pago_demo': request.session.get(clave_demo),
+    })

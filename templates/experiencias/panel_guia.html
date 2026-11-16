@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block titulo %}Panel del guia | Aventuras del Sur{% endblock %}
+{% block encabezado %}
+<div class="page-heading catalogo-encabezado">
+    <div><p class="catalogo-etiqueta">GUIA ECOTURISTICO</p><h1>Hola, {{ user.first_name|default:user.username }}</h1><p class="page-subtitle">Organiza tus actividades y registra la asistencia de tu grupo.</p></div>
+</div>
+{% endblock %}
+{% block contenido %}
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-4"><a class="card card-body h-100 text-decoration-none text-success" href="{% url 'mi_perfil' %}"><i class="bi bi-person fs-3" aria-hidden="true"></i><strong>Mi perfil</strong><span class="text-body-secondary">Revisa tus datos personales.</span></a></div>
+    <div class="col-12 col-md-4"><a class="card card-body h-100 text-decoration-none text-success" href="{% url 'calendario' %}"><i class="bi bi-calendar3 fs-3" aria-hidden="true"></i><strong>Calendario de actividades</strong><span class="text-body-secondary">Consulta tus tours por mes.</span></a></div>
+    <div class="col-12 col-md-4"><a class="card card-body h-100 text-decoration-none text-success" href="{% url 'experiencia_lista' %}"><i class="bi bi-compass fs-3" aria-hidden="true"></i><strong>Mis tours</strong><span class="text-body-secondary">Gestiona las experiencias que registraste.</span></a></div>
+</div>
+<div class="page-heading"><h2 class="h4">Mis tours y grupos</h2><a class="btn btn-success" href="{% url 'experiencia_crear' %}">Crear experiencia</a></div>
+<div class="row g-3">
+    {% for experiencia in experiencias %}
+    <div class="col-12 col-xl-6"><section class="card catalogo-panel h-100">
+        <div class="card-header d-flex flex-wrap justify-content-between gap-2"><strong>{{ experiencia.categoria.nombre }}</strong><span class="badge {% if experiencia.estado %}text-bg-success{% else %}text-bg-secondary{% endif %}">{% if experiencia.estado %}Activa{% else %}Inactiva{% endif %}</span></div>
+        <div class="card-body"><h3 class="h5">{{ experiencia.titulo }}</h3><p>{{ experiencia.fecha_hora|date:'d/m/Y H:i' }} · Cupo maximo: {{ experiencia.cupo_maximo }}</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a class="btn btn-sm btn-outline-success" href="{% url 'grupo' experiencia.pk %}">Detalle del grupo</a>
+                <a class="btn btn-sm btn-success" href="{% url 'grupo' experiencia.pk %}#visitantes">Registrar visitantes</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'experiencia_editar' experiencia.pk %}#id_estado">Actualizar estado de ruta</a>
+            </div>
+        </div>
+    </section></div>
+    {% empty %}<div class="col-12"><p class="card card-body">Todavia no tienes tours. Crea una experiencia para verla aqui y en el calendario.</p></div>{% endfor %}
+</div>
+{% endblock %}
